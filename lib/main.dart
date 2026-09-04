@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CatBreedProvider(
           catBreeds: <CatBreed>[],
+          cachedCatBreeds: <CatBreed>[],
         )),
       ],
       child: MaterialApp(

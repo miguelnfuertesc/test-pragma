@@ -4,12 +4,14 @@ import 'package:test_pragma/data/webclient.dart';
 
 class CatBreedProvider with ChangeNotifier { 
   List<CatBreed> catBreeds;
+  List<CatBreed> cachedCatBreeds;
   CatBreed? selected;
   bool isLoading = false;
   String? _errorMessage;
 
   CatBreedProvider({
     required this.catBreeds,
+    required this.cachedCatBreeds,
   });
 
   void onSelected(CatBreed cat) {
@@ -19,10 +21,12 @@ class CatBreedProvider with ChangeNotifier {
 
   void onSearch(String search) {
     if (search == '') {
-      fetchCatBreeds();
+      catBreeds..clear()..addAll(cachedCatBreeds);
+      notifyListeners();
+      return;
     }
 
-    List<CatBreed> list = catBreeds.where(
+    List<CatBreed> list = cachedCatBreeds.where(
       (element) => element.name?.toLowerCase().contains(search.toLowerCase()) ?? false
     ).toList();
     catBreeds..clear()..addAll(list);
@@ -40,6 +44,7 @@ class CatBreedProvider with ChangeNotifier {
       final response = await webClient.get(path);
 
       catBreeds = response.map((json) => CatBreed.fromJson(json)).toList();
+      cachedCatBreeds = List.of(catBreeds).toList();
     } catch (e) {
       _errorMessage = 'Error en la red: $e';
       debugPrint('__DEBUG_ERROR__${e}');
