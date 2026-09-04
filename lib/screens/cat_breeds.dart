@@ -79,49 +79,60 @@ class AppCardList extends StatelessWidget {
     return Consumer(
       builder: (_, CatBreedProvider provider, __) {
         return Flexible(
-          child: ListView(
-            children: provider.catBreeds.map((CatBreed currentCat)
-            => InkWell(
-              onTap: () {
-                provider.onSelected(currentCat);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CatBreedDetailsScreen()),
-                );
-              },
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(currentCat.name ?? ''),
-                          Text('Más...'),
-                        ],
-                      ),
-                      currentCat.image == null || currentCat.image == '' ? 
-                      Text('Imagen no disponible') :
-                      Image.network(currentCat.image ?? '',
-                        width: 300,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ),
-                      Text(currentCat.origin ?? ''),
-                      Text(currentCat.temperament ?? ''),
-                    ],
+          child: ListView.builder(
+            itemCount: provider.catBreeds.length,
+            itemBuilder: (context, index) {
+              final currentCat = provider.catBreeds.elementAt(index);
+
+              return InkWell(
+                onTap: () {
+                  provider.onSelected(currentCat);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CatBreedDetailsScreen()),
+                  );
+                },
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(currentCat.name ?? ''),
+                            Text('Más...'),
+                          ],
+                        ),
+                        currentCat.image == null || currentCat.image == '' ? 
+                        Text('Imagen no disponible') :
+                        Image.network(currentCat.image ?? '',
+                          width: 300,
+                          height: 200,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (_, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            
+                            return CircularProgressIndicator(
+                              color: Colors.blue,
+                              strokeWidth: 4.0,
+                            );
+                          },
+                        ),
+                        Text(currentCat.origin ?? ''),
+                        Text(currentCat.temperament ?? ''),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            ).toList(),
-          )
+              );
+            }
+          ),
         );
       },
     );
