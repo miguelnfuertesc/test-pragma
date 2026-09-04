@@ -1,17 +1,42 @@
-# test_pragma
+# Cats App in Flutter
 
-A new Flutter project.
+## Features
+
+- **Splash Screen**: It runs automatically once the app has started.
+- **Cat List**: It will automatically trigger a Cat List Screen with cats taken from TheCatApi (Http Request).
+- **Cat Search**: As soon as the user fill the search input, it triggers automatically the cat search and filters by breed name.
+- **Cat Details**: As soon as the user selects a cat, the system triggers a new activity with information about the selected cat.
+- **API Rest Client**: The system implements a layer to make http interaction called WebClient.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To use this project, follow the instructions below:
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Ensure you have Flutter installed on your machine. For more information on installing Flutter, refer to the [official Flutter documentation](https://flutter.dev/docs/get-started/install).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+
+#### Clone the repo
+   ```bash
+   git clone https://github.com/miguelnfuertesc/test-pragma.git
+   ```
+#### Install dependences
+   ```bash
+   flutter pub get
+   ```
+#### Launch the app on an android device
+   
+   ```bash
+   # list all emulators
+   flutter emulators
+   ```
+   ```bash
+   # launch the emulators
+   flutter emulators --launch id
+   ```
+   ```bash
+   # launch the app
+   flutter run
+   ```
